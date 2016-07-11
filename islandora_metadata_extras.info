@@ -1,0 +1,6 @@
+name = "Islandora Metadata Extras"
+description = "Utility module that provides some options for customizing metadata display."
+version = 7.x-dev
+core = 7.x
+dependencies[] = islandora
+dependencies[] = islandora_solr
