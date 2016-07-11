@@ -11,7 +11,7 @@
 function islandora_metadata_extras_islandora_solr_object_result_alter(&$search_result, $query_processor) {
   module_load_include('inc', 'islandora_metadata_extras', 'includes/utilities');
   $collection_field = variable_get('islandora_solr_member_of_collection_field', 'RELS_EXT_isMemberOfCollection_uri_ms');
-  foreach ($search_result['solr_doc']['RELS_EXT_isMemberOfCollection_uri_ms'] as $collection_pid) {
+  foreach ($search_result['solr_doc'][$collection_field] as $collection_pid) {
     $search_result['solr_doc'][$collection_field] = islandora_metadata_extras_pid_to_label($collection_pid);
   }
 }
