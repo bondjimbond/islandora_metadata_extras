@@ -17,7 +17,7 @@ Install as usual, see [this](https://drupal.org/documentation/install/modules-th
 
 ## Configuration
 
-There are no admin settings for this module. All you have to do is enable it.
+Configuration options are available at `admin/islandora/tools/metadata_extras`. Currently, there is only one option, whether to replace the collection PID with its human-readable label or not in search results. More options will appear as the modules listed above are incorporated into this one.
 
 ## Maintainer
 
