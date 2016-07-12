@@ -16,7 +16,7 @@
  */
 function islandora_metadata_extras_pid_to_label($pid) {
   $query_processor = new IslandoraSolrQueryProcessor();
-  $label = NULL;
+  $label = '';
   $pid = str_replace('info:fedora/', '', $pid);
   if (islandora_is_valid_pid($pid)) {
     $query_processor->buildQuery("PID:\"$pid\"");
@@ -24,7 +24,7 @@ function islandora_metadata_extras_pid_to_label($pid) {
     $query_processor->executeQuery();
     if (!empty($query_processor->islandoraSolrResult) && !empty($query_processor->islandoraSolrResult['response']['objects'])) {
       $label = (!empty($query_processor->islandoraSolrResult['response']['objects'][0]['object_label']) ?
-        $query_processor->islandoraSolrResult['response']['objects'][0]['object_label'] : NULL);
+        $query_processor->islandoraSolrResult['response']['objects'][0]['object_label'] : '');
     }
   }
   return $label;
