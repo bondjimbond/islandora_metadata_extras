@@ -12,7 +12,7 @@
  *   The PID to look up in Solr.
  *
  * @return string
- *   The object's label, or NULL.
+ *   The object's label, or an empty string.
  */
 function islandora_metadata_extras_pid_to_label($pid) {
   $query_processor = new IslandoraSolrQueryProcessor();

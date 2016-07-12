@@ -21,7 +21,12 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
     return isset($form_state['values'][$name]) ? $form_state['values'][$name] : variable_get($name, $default);
   };
 
-  $form['islandora_metadata_extras_use_collection_label'] = array(
+  $form['islandora_metadata_extras_search_results_configuration'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Search results'),
+  );
+
+  $form['islandora_metadata_extras_search_results_configuration']['islandora_metadata_extras_use_collection_label'] = array(
     '#type' => 'checkbox',
     '#title' => t('Replace collection PID with collection label in search results'),
     '#default_value' => variable_get('islandora_metadata_extras_use_collection_label', FALSE),
