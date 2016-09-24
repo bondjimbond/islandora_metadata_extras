@@ -29,3 +29,63 @@ function islandora_metadata_extras_pid_to_label($pid) {
   }
   return $label;
 }
+
+/**
+ * Given a PID, looks up the object's label in Solr.
+ *
+ * @param string $pid
+ *   The PID of the object that the MODS is part of.
+ * @param string $mods_xml
+ *   The XML content of the MODS datastream.
+ *
+ * @return string|bool
+ *   The modified XML, or FALSE if the XML was not modified.
+ */
+function islandora_metadata_extras_add_uuid_to_mods($pid, $mods_xml) {
+  $dom = new DOMDocument();
+  $dom->loadXML($mods_xml);
+
+  $xpath = new \DOMXPath($dom);
+  $xpath->registerNamespace('mods', 'http://www.loc.gov/mods/v3');
+  $existing_uuid_identifiers = $xpath->query("//mods:identifier[@type='uuid']");
+  if ($existing_uuid_identifiers->length > 0) {
+    return FALSE;
+  }
+
+  // If there were none, continue.
+  $uuid = islandora_metadata_extras_get_uuid();
+  if (!strlen($uuid)) {
+    watchdog('islandora_metadata_extras', 'UUID not added to MODS for !object.',
+      array('!object' => $pid));
+    return FALSE;
+  }
+
+  // Build the <identifier> element we are adding.
+  $type = $dom->createAttribute('type');
+  $type->value = 'uuid';
+  $uuid_identifier = $dom->createElement('identifier', trim($uuid));
+  $uuid_identifier->appendChild($type);
+
+  // Figure out where to add it. If one ore more <identifier> elements
+  // exist in the document, add the new one before the first existing one.
+  $identifiers = $dom->getElementsByTagName('identifier');
+  if ($identifiers->length) {
+    $dom->documentElement->insertBefore($uuid_identifier, $identifiers->item(0));
+  }
+  else {
+    // If none exist, append it to the end of the document.
+    $dom->documentElement->appendChild($uuid_identifier);
+  }
+
+  return $dom->saveXML();
+}
+
+/**
+ * Lazy generation of a UUID.
+ *
+ * @return string
+ *   A UUID.
+ */
+function islandora_metadata_extras_get_uuid() {
+  return shell_exec('uuidgen');
+}

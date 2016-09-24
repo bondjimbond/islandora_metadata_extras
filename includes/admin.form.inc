@@ -25,11 +25,27 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
     '#type' => 'fieldset',
     '#title' => t('Search results'),
   );
-
   $form['islandora_metadata_extras_search_results_configuration']['islandora_metadata_extras_use_collection_label'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Replace collection PID with collection label in search results'),
+    '#title' => t('Replace collection PID with collection label in search results.'),
     '#default_value' => variable_get('islandora_metadata_extras_use_collection_label', FALSE),
+  );
+
+  $form['islandora_metadata_extras_metadata_generation_configuration'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Metadata generation'),
+  );
+  if (strlen(shell_exec('which uuidgen'))) {
+    $uuidgen_exists_markup = ' <img src="/misc/watchdog-ok.png" />';
+  }
+  else {
+    $uuidgen_exists_markup = ' <img src="/misc/watchdog-error.png" />';
+  }
+  $form['islandora_metadata_extras_metadata_generation_configuration']['islandora_metadata_extras_add_uuid_to_mods'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Add an &lt;identifer type="uuid"&gt; element to newly ingested MODS datastreams. Requires presence of uuidgen utility. !uuidgen_exists',
+      array('!uuidgen_exists' => $uuidgen_exists_markup)),
+    '#default_value' => variable_get('islandora_metadata_extras_add_uuid_to_mods', FALSE),
   );
 
   return system_settings_form($form);

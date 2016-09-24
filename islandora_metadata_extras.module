@@ -36,3 +36,26 @@ function islandora_metadata_extras_islandora_solr_object_result_alter(&$search_r
     }
   }
 }
+
+/**
+ * Implements hook_islandora_datastream_alter().
+ */
+function islandora_metadata_extras_islandora_datastream_alter($object, $datastream, &$context) {
+  if (variable_get('islandora_metadata_extras_add_uuid_to_mods', FALSE)) {
+    if ($object['MODS'] && $datastream->id == 'MODS' && $context['action'] == 'ingest') {
+      // Check to see if we already have an identifier element with type
+      // 'uuid' and if not, add one.
+      $dom = new DOMDocument();
+      $dom->loadXML($datastream->content);
+      $xpath = new DOMXPath($dom);
+      $xpath->registerNamespace('mods', 'http://www.loc.gov/mods/v3');
+      $existing_uuid_identifiers = $xpath->query("//mods:identifier[@type='uuid']");
+      if ($existing_uuid_identifiers->length === 0) {
+        module_load_include('inc', 'islandora_metadata_extras', 'includes/utilities');
+        if ($with_uuid = islandora_metadata_extras_add_uuid_to_mods($object->id, $datastream->content)) {
+          $datastream->setContentFromString($with_uuid);
+        }
+      }
+    }
+  }
+}
