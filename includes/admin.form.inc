@@ -21,6 +21,16 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
     return isset($form_state['values'][$name]) ? $form_state['values'][$name] : variable_get($name, $default);
   };
 
+  $form['islandora_metadata_extras_object_metadata_display'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Object metadata display'),
+  );
+  $form['islandora_metadata_extras_object_metadata_display']['islandora_metadata_extras_hide_empty_metadata_values'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Hide empty fields in object metadata displays.'),
+    '#default_value' => variable_get('islandora_metadata_extras_hide_empty_metadata_values', FALSE),
+  );
+
   $form['islandora_metadata_extras_search_results_configuration'] = array(
     '#type' => 'fieldset',
     '#title' => t('Search results'),

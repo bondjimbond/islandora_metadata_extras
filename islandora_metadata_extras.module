@@ -38,6 +38,15 @@ function islandora_metadata_extras_islandora_solr_object_result_alter(&$search_r
 }
 
 /**
+ * Implements hook_islandora_view_object_alter().
+ */
+function islandora_metadata_extras_islandora_view_object_alter(&$object, &$rendered) {
+  if (variable_get('islandora_metadata_extras_hide_empty_metadata_values', FALSE)) {
+    drupal_add_js(drupal_get_path('module', 'islandora_metadata_extras') . '/js/hide_empty_metadata_values.js', 'file');
+  }
+}
+
+/**
  * Implements hook_islandora_datastream_alter().
  */
 function islandora_metadata_extras_islandora_datastream_alter($object, $datastream, &$context) {
