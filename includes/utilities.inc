@@ -31,7 +31,7 @@ function islandora_metadata_extras_pid_to_label($pid) {
 }
 
 /**
- * Given a PID, looks up the object's label in Solr.
+ * Adds an identifier element containing a UUID to a MODS datastream.
  *
  * @param string $pid
  *   The PID of the object that the MODS is part of.

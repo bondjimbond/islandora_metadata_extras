@@ -1,5 +1,5 @@
 name = "Islandora Metadata Extras"
-description = "Utility module that provides some options for customizing metadata display."
+description = "Utility module that provides some options for customizing metadata display and generation."
 version = 7.x-dev
 core = 7.x
 package = Islandora Tools
