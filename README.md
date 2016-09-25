@@ -2,12 +2,11 @@
 
 ## Introduction
 
-Utility module that provides options for modifying how metadata is displayed and generated.
-
-Currently, the following options are available:
+Utility module that provides options for modifying how metadata is displayed and generated. Currently, the following options are available:
 
 * Object metadata display
   * Hide metadata fields that contain no content.
+  * Convert dates in yyyy-mm-dd format into human-readable equivalents like "September 24, 1968".
 * Metadata display
   * Replace collection PID with collection label in search results. See "Configuration," below for more details.
 * Metadata generation
@@ -29,6 +28,8 @@ Configuration options are available at Administration > Islandora > Islandora Ut
 
 * To use the option to hide metadata fields that contain no content:
   * Simply enable this option in the Metadata Extras admin options. No other configuration is necessary.
+* To use the option to convert yyyy-mm-dd dates to human-readable equivalents:
+  * Simply enable this option in the Metadata Extras admin options. No other configuration is necessary. Note that this option only applies if there is a single date the metadata field matching the pattern `\d\d\d\d\-\d\d\-\d\d`.
 * To use the option to replace the collection PID with its human-readable label:
   1. add the field that stores your objects' collecion PID to your Solr search results, just like you would for any other field. The name of this field is configured in Administration > Islandora> Solr Index > Solr Settings > Required Solr Fields > The isMemberOfCollection Solr field. The default values is "RELS_EXT_isMemberOfCollection_uri_ms".
   1. enable the option in the Metadata Extras admin options form. Note that not all Islandora objects are direct members of a collection; for example, children of compound objects, and newspaper and book pages.

@@ -30,6 +30,11 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
     '#title' => t('Hide empty fields in object metadata displays.'),
     '#default_value' => variable_get('islandora_metadata_extras_hide_empty_metadata_values', FALSE),
   );
+  $form['islandora_metadata_extras_object_metadata_display']['islandora_metadata_extras_show_pretty_dates'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Convert yyyy-mm-dd dates in object metadata displays to human-readable equivalents.bject metadata displays.'),
+    '#default_value' => variable_get('islandora_metadata_extras_show_pretty_dates', FALSE),
+  );
 
   $form['islandora_metadata_extras_search_results_configuration'] = array(
     '#type' => 'fieldset',

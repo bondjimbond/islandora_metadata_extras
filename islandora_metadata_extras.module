@@ -44,6 +44,12 @@ function islandora_metadata_extras_islandora_view_object_alter(&$object, &$rende
   if (variable_get('islandora_metadata_extras_hide_empty_metadata_values', FALSE)) {
     drupal_add_js(drupal_get_path('module', 'islandora_metadata_extras') . '/js/hide_empty_metadata_values.js', 'file');
   }
+
+  if (variable_get('islandora_metadata_extras_show_pretty_dates', FALSE)) {
+    global $language;
+    drupal_add_js(array('islandora_metadata_extras' => array('locale' => $language->language)), array('type' => 'setting'));
+    drupal_add_js(drupal_get_path('module', 'islandora_metadata_extras') . '/js/convert_date_values.js', 'file');
+  }
 }
 
 /**
