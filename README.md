@@ -7,8 +7,8 @@ Utility module that provides options for modifying how metadata is displayed and
 * Object metadata display
   * Hide metadata fields that contain no content.
   * Replace dates in yyyy-mm-dd and yyyy-mm format with human-readable equivalents like "September 24, 1968" and "September 1968".
-* Metadata display
-  * Replace collection PID with collection label in search results. See "Configuration," below for more details.
+* Search results
+  * Replace collection PID with collection label in search results.
 * Metadata generation
   * Adds an identifier element with type 'uuid' to all newly ingested MODS datastreams (via web forms and batch ingest). e.g.,`<identifier type="uuid">811f4f3f-7687-4b21-b1f3-6b547501b5ba</identifier>`
 
@@ -27,14 +27,14 @@ Install as usual, see [this](https://drupal.org/documentation/install/modules-th
 Configuration options are available at Administration > Islandora > Islandora Utility Modules > Metadata Extras (`admin/islandora/tools/metadata_extras`).
 
 * To use the option to hide metadata fields that contain no content:
-  * Simply enable this option in the Metadata Extras admin options. No other configuration is necessary.
-* To use the option to replace yyyy-mm-dd and yyyy-mm dates with human-readable equivalents:
-  * Simply enable this option in the Metadata Extras admin options. No other configuration is necessary. Conversion respects the current user interface language. Note that this option only applies if there is a single date the metadata field matching the pattern `\d\d\d\d\-\d\d\-\d\d` or `\d\d\d\d\-\d\d`.
+  * Enable this option in the Metadata Extras admin options. No other configuration is necessary.
+* To use the option to replace yyyy-mm-dd and yyyy-mm dates with human-readable equivalents in search results:
+  * Enable this option in the Metadata Extras admin options. No other configuration is necessary. Conversion respects the current user interface language. Note that this option only applies if there is a single date the metadata field matching the pattern `\d\d\d\d\-\d\d\-\d\d` or `\d\d\d\d\-\d\d`.
 * To use the option to replace the collection PID with its human-readable label:
   1. add the field that stores your objects' collecion PID to your Solr search results, just like you would for any other field. The name of this field is configured in Administration > Islandora> Solr Index > Solr Settings > Required Solr Fields > The isMemberOfCollection Solr field. The default values is "RELS_EXT_isMemberOfCollection_uri_ms".
   1. enable the option in the Metadata Extras admin options form. Note that not all Islandora objects are direct members of a collection; for example, children of compound objects, and newspaper and book pages.
 * To use the option to add an identifier element containing a UUID to your MODS datastreams:
-  * Simply enable this option in the Metadata Extras admin options. No other configuration is necessary.
+  * Enable this option in the Metadata Extras admin options. No other configuration is necessary.
 
 ## Maintainer
 
@@ -42,7 +42,7 @@ Configuration options are available at Administration > Islandora > Islandora Ut
 
 ## Development and feedback
 
-Pull requests are welcome, as are suggestions and use cases. In particular, if you have this module enabled and you are still seeing "empty" metadata elements, open a Github issue and include a URL to the object.
+Pull requests are welcome, as are suggestions and use cases.
 
 ## License
 
