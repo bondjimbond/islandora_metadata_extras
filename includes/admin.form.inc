@@ -32,7 +32,7 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
   );
   $form['islandora_metadata_extras_object_metadata_display']['islandora_metadata_extras_show_pretty_dates'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Convert yyyy-mm-dd dates in object metadata displays to human-readable equivalents.bject metadata displays.'),
+    '#title' => t('Replace yyyy-mm-dd dates in object metadata displays with  human-readable equivalents.bject metadata displays.'),
     '#default_value' => variable_get('islandora_metadata_extras_show_pretty_dates', FALSE),
   );
 
