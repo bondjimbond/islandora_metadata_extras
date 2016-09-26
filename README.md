@@ -8,6 +8,7 @@ Utility module that provides options for modifying how metadata is displayed and
   * Hide metadata fields that contain no content.
   * Replace dates in yyyy-mm-dd and yyyy-mm format with human-readable equivalents like "September 24, 1968" and "September 1968".
 * Search results
+  * Hide metadata fields that contain no content.
   * Replace collection PID with collection label in search results.
 * Metadata generation
   * Adds an identifier element with type 'uuid' to all newly ingested MODS datastreams (via web forms and batch ingest). e.g.,`<identifier type="uuid">811f4f3f-7687-4b21-b1f3-6b547501b5ba</identifier>`
@@ -26,8 +27,8 @@ Install as usual, see [this](https://drupal.org/documentation/install/modules-th
 
 Configuration options are available at Administration > Islandora > Islandora Utility Modules > Metadata Extras (`admin/islandora/tools/metadata_extras`).
 
-* To use the option to hide metadata fields that contain no content:
-  * Enable this option in the Metadata Extras admin options. No other configuration is necessary.
+* To use the options to hide metadata fields that contain no content:
+  * Enable these options in the Metadata Extras admin options. No other configuration is necessary.
 * To use the option to replace yyyy-mm-dd and yyyy-mm dates with human-readable equivalents in search results:
   * Enable this option in the Metadata Extras admin options. No other configuration is necessary. Conversion respects the current user interface language. Note that this option only applies if there is a single date the metadata field matching the pattern `\d\d\d\d\-\d\d\-\d\d` or `\d\d\d\d\-\d\d`.
 * To use the option to replace the collection PID with its human-readable label:
