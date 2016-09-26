@@ -40,6 +40,11 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
     '#type' => 'fieldset',
     '#title' => t('Search results'),
   );
+  $form['islandora_metadata_extras_search_results_configuration']['islandora_metadata_extras_hide_empty_values_in_search_results'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Hide empty fields in search results.'),
+    '#default_value' => variable_get('islandora_metadata_extras_hide_empty_values_in_search_results', FALSE),
+  );
   $form['islandora_metadata_extras_search_results_configuration']['islandora_metadata_extras_use_collection_label'] = array(
     '#type' => 'checkbox',
     '#title' => t('Replace collection PID with collection label in search results.'),
