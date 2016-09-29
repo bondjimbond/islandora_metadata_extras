@@ -45,6 +45,11 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
     '#title' => t('Hide empty fields in search results.'),
     '#default_value' => variable_get('islandora_metadata_extras_hide_empty_values_in_search_results', FALSE),
   );
+  $form['islandora_metadata_extras_search_results_configuration']['islandora_metadata_extras_show_tooltips_in_search_results'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Show preview tooltips in search results. Requires https://www.drupal.org/project/qtip.'),
+    '#default_value' => variable_get('islandora_metadata_extras_show_tooltips_in_search_results', FALSE),
+  );
   $form['islandora_metadata_extras_search_results_configuration']['islandora_metadata_extras_use_collection_label'] = array(
     '#type' => 'checkbox',
     '#title' => t('Replace collection PID with collection label in search results.'),
