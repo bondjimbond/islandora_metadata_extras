@@ -4,7 +4,7 @@
       $(this).after(Drupal.settings.islandora_metadata_extras.tooltip_markup);
       $(this).qtip({
         content: {
-          text: $(this).next('.tooltiptext')
+          text: $(this).next('.qtipcontent')
         }
       });
     }

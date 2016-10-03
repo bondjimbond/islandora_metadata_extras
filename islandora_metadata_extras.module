@@ -23,6 +23,15 @@ function islandora_metadata_extras_menu() {
 }
 
 /**
+ * Implements hook_ctools_plugin_api().
+ */
+function islandora_metadata_extras_ctools_plugin_api($module, $api) {
+  if ($module == 'qtip' && $api == 'qtip_default') {
+    return array('version' => '1');
+  }
+}
+
+/**
  * Implements hook_islandora_solr_object_result_alter().
  */
 function islandora_metadata_extras_islandora_solr_object_result_alter(&$search_result, $query_processor) {
@@ -60,9 +69,9 @@ function islandora_metadata_extras_preprocess_islandora_solr_wrapper(&$variables
     drupal_add_js(drupal_get_path('module', 'islandora_metadata_extras') . '/js/hide_empty_values_in_search_results.js', 'file');
   }
   if (variable_get('islandora_metadata_extras_show_tooltips_in_search_results', FALSE)) {
-    $preview_markup = '<div style="display: none;" class="tooltiptext">I am some markup yo</div>';
+    $preview_markup = '<div style="display: none;" class="qtipcontent" data-qtip-instance="islandora_metadata_extras_preview">I am some markup yo</div>';
     drupal_add_js(array('islandora_metadata_extras' => array('tooltip_markup' => $preview_markup)), array('type' => 'setting'));
-    drupal_add_js(drupal_get_path('module', 'islandora_metadata_extras') . '/js/islandora_me_qtip.js', 'file');
+    drupal_add_js(drupal_get_path('module', 'islandora_metadata_extras') . '/js/show_metadata_previews.js', 'file');
   }
 }
 
