@@ -51,6 +51,16 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
     '#default_value' => variable_get('islandora_metadata_extras_use_collection_label', FALSE),
   );
 
+  $form['islandora_metadata_extras_embedded_metadata'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Embedded metadata'),
+  );
+  $form['islandora_metadata_extras_embedded_metadata']['islandora_metadata_extras_embed_dc_in_head'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Add &lt;meta&gt; tags containing DC values, for Zotero, etc.'),
+    '#default_value' => variable_get('islandora_metadata_extras_embed_dc_in_head', FALSE),
+  );
+
   $form['islandora_metadata_extras_metadata_generation_configuration'] = array(
     '#type' => 'fieldset',
     '#title' => t('Metadata generation'),

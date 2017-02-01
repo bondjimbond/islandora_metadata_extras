@@ -10,6 +10,8 @@ Utility module that provides options for modifying how metadata is displayed and
 * Search results
   * Hide metadata fields that contain no content.
   * Replace collection PID with collection label in search results.
+* Embedded metadata
+  * Add `<meta>` tags compatible with [Zotero](https://www.zotero.org/)
 * Metadata generation
   * Adds an identifier element with type 'uuid' to all newly ingested MODS datastreams (via web forms and batch ingest). e.g.,`<identifier type="uuid">811f4f3f-7687-4b21-b1f3-6b547501b5ba</identifier>`
 

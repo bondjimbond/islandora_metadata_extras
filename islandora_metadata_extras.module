@@ -23,6 +23,32 @@ function islandora_metadata_extras_menu() {
 }
 
 /**
+ * Implements hook_islandora_view_object().
+ */
+function islandora_metadata_extras_islandora_view_object($object) {
+  if (variable_get('islandora_metadata_extras_embed_dc_in_head', FALSE)) {
+    module_load_include('inc', 'islandora_metadata_extras', 'includes/utilities');
+    $dc = islandora_metadata_extras_get_dc_values($object['DC']->content);
+    $key_salt = 0;
+    foreach ($dc as $element => $values) {
+      foreach ($values as $value) {
+        // This output is consistent with Zotero's use of DC, e.g.,
+        // <meta name="DC.type" content="image" />.
+        $data = array(
+          '#tag' => 'meta',
+          '#attributes' => array(
+            'name' => 'DC.' . $element,
+            'content' => $value,
+          ),
+        );
+        drupal_add_html_head($data, 'islandora_metadata_extras_dc_meta_tags' . $key_salt++);
+      }
+    }
+  }
+  return array();
+}
+
+/**
  * Implements hook_islandora_solr_object_result_alter().
  */
 function islandora_metadata_extras_islandora_solr_object_result_alter(&$search_result, $query_processor) {
