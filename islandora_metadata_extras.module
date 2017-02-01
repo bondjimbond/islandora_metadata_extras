@@ -38,7 +38,7 @@ function islandora_metadata_extras_islandora_view_object($object) {
           '#tag' => 'meta',
           '#attributes' => array(
             'name' => 'DC.' . $element,
-            'content' => htmlentities($value),
+            'content' => $value,
           ),
         );
         drupal_add_html_head($data, 'islandora_metadata_extras_dc_meta_tags' . $key_salt++);
