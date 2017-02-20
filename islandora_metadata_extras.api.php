@@ -15,6 +15,6 @@
  * @param object $object
  *  The current Islandora object.
  */
-function mymodule_islandora_metadata_extras_alter(&$dc, $object) {
+function mymodule_islandora_metadata_extras_dc_in_head_alter(&$dc, $object) {
   $dc['title'][0] = "Out with the old title, in with the new!";
 }
