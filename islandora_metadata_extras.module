@@ -29,6 +29,7 @@ function islandora_metadata_extras_islandora_view_object($object) {
   if (variable_get('islandora_metadata_extras_embed_dc_in_head', FALSE)) {
     module_load_include('inc', 'islandora_metadata_extras', 'includes/utilities');
     $dc = islandora_metadata_extras_get_dc_values($object['DC']->content);
+    drupal_alter('islandora_metadata_extras', $dc, $object);
     $key_salt = 0;
     foreach ($dc as $element => $values) {
       foreach ($values as $value) {
