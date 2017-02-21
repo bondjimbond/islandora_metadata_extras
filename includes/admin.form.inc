@@ -65,6 +65,37 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
     '#type' => 'fieldset',
     '#title' => t('Metadata generation'),
   );
+
+  if (user_access('administer site configuration')) {
+    $xsl_extensions = array('xsl', 'xslt');
+    $form['islandora_metadata_extras_metadata_generation_configuration']['islandora_metadata_extras_use_dc_xslt'] = array(
+      '#type' => 'checkbox',
+      '#title' => t("Use a custom XSLT stylesheet to create DC datastreams."),
+      '#default_value' => variable_get('islandora_metadata_extras_use_dc_xslt', FALSE),
+    );
+    $current_dc_xslt_filepath = variable_get('islandora_metadata_extras_dc_xslt_path', '');
+    if (!strlen($current_dc_xslt_filepath)) {
+      $current_dc_xslt_filepath = '[none]';
+    }
+    $form['islandora_metadata_extras_metadata_generation_configuration']['dc_xslt_stylesheet'] = array(
+      '#title' => t('DC XSLT stylesheet'),
+      '#type' => 'managed_file',
+      '#required' => FALSE,
+      '#description' => t('Select a file to upload. Existing files will be overwritten.<br/>Allowed file types: <strong>@ext.</strong><br />Current value is !xslt_path.',
+        array('@ext' => implode(', ', $xsl_extensions), '!xslt_path' => $current_dc_xslt_filepath)),
+      '#default_value' => isset($form_state['values']['files']) ? $form_state['values']['files'] : NULL,
+      '#upload_location' => 'temporary://',
+      '#upload_validators' => array(
+        'file_validate_extensions' => $xsl_extensions,
+      ),
+      '#states' => array(
+        'visible' => array(
+          ':input[name="islandora_metadata_extras_use_dc_xslt"]' => array('checked' => TRUE),
+        ),
+      ),
+    );
+  }
+
   if (strlen(shell_exec('which uuidgen'))) {
     $uuidgen_exists_markup = ' <img src="/misc/watchdog-ok.png" />';
   }
@@ -78,5 +109,30 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
     '#default_value' => variable_get('islandora_metadata_extras_add_uuid_to_mods', FALSE),
   );
 
+  $form['#submit'][] = "islandora_metadata_extras_save_dc_xslt";
+
   return system_settings_form($form);
+}
+
+/**
+ * Form submit handler. Copies the uploaded file into the public 'files' directory.
+ *
+ * @param array $form
+ *   The drupal form.
+ * @param array $form_state
+ *   The drupal form state.
+ */
+function islandora_metadata_extras_save_dc_xslt(array $form, array &$form_state) {
+  if (isset($form_state['values']['dc_xslt_stylesheet']) && ($form_state['values']['dc_xslt_stylesheet'] > 0)) {
+    $stylesheet_file = file_load($form_state['values']['dc_xslt_stylesheet']);
+    $stylesheet_tmp_path = drupal_realpath($stylesheet_file->uri);
+    $stylesheet_filename = drupal_realpath($stylesheet_file->filename);
+    $destination = "public://" . $stylesheet_filename;
+    $moved_file = file_move($stylesheet_file, $destination, FILE_EXISTS_REPLACE);
+    $moved_file_realpath = drupal_realpath($moved_file->uri);
+    drupal_set_message(t('Stylesheet for generating DC datastreams uploaded to !dest',
+      array('!dest' => $moved_file_realpath)));
+    variable_set('islandora_metadata_extras_dc_xslt_path', $moved_file_realpath);
+
+  }
 }
