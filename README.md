@@ -14,6 +14,7 @@ Utility module that provides options for modifying how metadata is displayed and
   * Add `<meta>` tags compatible with [Zotero](https://www.zotero.org/)
 * Metadata generation
   * Adds an identifier element with type 'uuid' to all newly ingested MODS datastreams (via web forms and batch ingest). e.g.,`<identifier type="uuid">811f4f3f-7687-4b21-b1f3-6b547501b5ba</identifier>`
+  * Use an XSLT stylesheet other the one shipped with Islandora ([from the Library of Congress](http://www.loc.gov/standards/mods/v3/MODS3-5_DC_XSLT1-0.xsl)) to generate DC datastreams from MODS datastreams.
 
 ## Requirements
 
@@ -38,6 +39,8 @@ Configuration options are available at Administration > Islandora > Islandora Ut
   1. enable the option in the Metadata Extras admin options form. Note that not all Islandora objects are direct members of a collection; for example, children of compound objects, and newspaper and book pages.
 * To use the option to add an identifier element containing a UUID to your MODS datastreams:
   * Enable this option in the Metadata Extras admin options. No other configuration is necessary.
+* To use an alternative XSLT stylesheet to generate DC datastreams from MODS datastreams, check the "Use a custom XSLT stylesheet to create DC datastreams." option and upload an XLST file.
+  * After you enable this function, all DC datastreams on objects that are ingested or modified will be generated using your custom XSLT stylesheet.
 
 ## Maintainer
 
@@ -45,7 +48,7 @@ Configuration options are available at Administration > Islandora > Islandora Ut
 
 ## Development and feedback
 
-Pull requests are welcome, as are suggestions and use cases.
+Pull requests are welcome, as are suggestions and use cases. Please open an issue before opening a pull request.
 
 ## License
 
