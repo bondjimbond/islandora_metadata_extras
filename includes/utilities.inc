@@ -91,7 +91,7 @@ function islandora_metadata_extras_add_uuid_to_mods($pid, $mods_xml) {
  */
 function islandora_metadata_extras_get_dc_values($xml) {
   $dc_values = array();
-  $dom = new DOMDocument;
+  $dom = new DOMDocument();
   $dom->loadXML($xml);
   $elements = $dom->getElementsByTagNameNS('http://purl.org/dc/elements/1.1/', '*');
   foreach ($elements as $e) {
@@ -126,9 +126,7 @@ function islandora_metadata_extras_get_uuid() {
  *   The transformed DC XML.
  */
 function islandora_metadata_extras_mods_to_dc($mods_xml) {
-  $dc_xml = &drupal_static(__FUNCTION__);
   $path_to_xslt = variable_get('islandora_metadata_extras_dc_xslt_path', '');
-  if (!isset($dc_xml)) {
   if (file_exists($path_to_xslt)) {
     $xsl_doc = new DOMDocument();
     $xsl_doc->load($path_to_xslt);
@@ -137,7 +135,6 @@ function islandora_metadata_extras_mods_to_dc($mods_xml) {
     $xslt_proc = new XSLTProcessor();
     $xslt_proc->importStylesheet($xsl_doc);
     $dc_xml = $xslt_proc->transformToXML($xml_doc);
-  }
   }
   return $dc_xml;
 }

@@ -82,7 +82,10 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
       '#type' => 'managed_file',
       '#required' => FALSE,
       '#description' => t('Select a file to upload. Existing files will be overwritten.<br/>Allowed file types: <strong>@ext.</strong><br />Current stylesheet is at !xslt_path.',
-        array('@ext' => implode(', ', $xsl_extensions), '!xslt_path' => $current_dc_xslt_filepath)),
+        array(
+          '@ext' => implode(', ', $xsl_extensions),
+          '!xslt_path' => $current_dc_xslt_filepath)
+      ),
       '#default_value' => isset($form_state['values']['files']) ? $form_state['values']['files'] : NULL,
       '#upload_location' => 'temporary://',
       '#upload_validators' => array(
@@ -115,7 +118,9 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
 }
 
 /**
- * Form submit handler. Copies the uploaded file into the public 'files' directory.
+ * Form submit handler.
+ *
+ * Copies the uploaded file into the public 'files' directory.
  *
  * @param array $form
  *   The drupal form.

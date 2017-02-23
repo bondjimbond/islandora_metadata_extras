@@ -6,14 +6,13 @@
  */
 
 /**
- * Allows modules to alter Dublin Core values that get inserted into HTML meta tags.
+ * Allows modules to alter Dublin Core values destined for HTML meta tags.
  *
  * @param object $dc
  *   An array of Dublin Core elements, each member of which is itself
  *   an array.
- *
  * @param object $object
- *  The current Islandora object.
+ *   The current Islandora object.
  */
 function mymodule_islandora_metadata_extras_dc_in_head_alter(&$dc, $object) {
   // Override the title that gets inserted into the HTML HEAD meta tags for
