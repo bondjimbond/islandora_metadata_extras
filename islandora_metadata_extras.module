@@ -92,6 +92,7 @@ function islandora_metadata_extras_preprocess_islandora_solr_wrapper(&$variables
  * Implements hook_islandora_datastream_alter().
  */
 function islandora_metadata_extras_islandora_datastream_alter($object, $datastream, &$context) {
+  dd($context);
   if (variable_get('islandora_metadata_extras_add_uuid_to_mods', FALSE)) {
     if ($object['MODS'] && $datastream->id == 'MODS' && $context['action'] == 'ingest') {
       // Check to see if we already have an identifier element with type
@@ -111,18 +112,16 @@ function islandora_metadata_extras_islandora_datastream_alter($object, $datastre
   }
 
   if (variable_get('islandora_metadata_extras_use_dc_xslt', FALSE) && $object['MODS']) {
-   module_load_include('inc', 'islandora_metadata_extras', 'includes/utilities');
-   if ($dc_xml = islandora_metadata_extras_mods_to_dc($object['MODS']->content)) {
-     if ($context['action'] == 'ingest') {
+    module_load_include('inc', 'islandora_metadata_extras', 'includes/utilities');
+    if ($dc_xml = islandora_metadata_extras_mods_to_dc($object['MODS']->content)) {
+      if ($context['action'] == 'ingest') {
         if ($object['DC'] && $datastream->id == 'DC') {
           $datastream->setContentFromString($dc_xml);
         }
       }
       if ($context['action'] == 'modify') {
         if ($object['DC'] && $datastream->id == 'DC') {
-          if (isset($context['params']['dsString'])) {
-            $context['params']['dsString'] = $dc_xml;
-          }
+          $context['params']['dsString'] = $dc_xml;
         }
       }
     }

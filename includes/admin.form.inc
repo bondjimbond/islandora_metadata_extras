@@ -70,7 +70,7 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
     $xsl_extensions = array('xsl', 'xslt');
     $form['islandora_metadata_extras_metadata_generation_configuration']['islandora_metadata_extras_use_dc_xslt'] = array(
       '#type' => 'checkbox',
-      '#title' => t("Use a custom XSLT stylesheet to create DC datastreams."),
+      '#title' => t("Use a custom XSLT stylesheet to create DC datastreams from MODS."),
       '#default_value' => variable_get('islandora_metadata_extras_use_dc_xslt', FALSE),
     );
     $current_dc_xslt_filepath = variable_get('islandora_metadata_extras_dc_xslt_path', '');
@@ -78,10 +78,10 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
       $current_dc_xslt_filepath = '[none]';
     }
     $form['islandora_metadata_extras_metadata_generation_configuration']['dc_xslt_stylesheet'] = array(
-      '#title' => t('DC XSLT stylesheet'),
+      '#title' => t('MODS to DC XSLT stylesheet'),
       '#type' => 'managed_file',
       '#required' => FALSE,
-      '#description' => t('Select a file to upload. Existing files will be overwritten.<br/>Allowed file types: <strong>@ext.</strong><br />Current value is !xslt_path.',
+      '#description' => t('Select a file to upload. Existing files will be overwritten.<br/>Allowed file types: <strong>@ext.</strong><br />Current stylesheet is at !xslt_path.',
         array('@ext' => implode(', ', $xsl_extensions), '!xslt_path' => $current_dc_xslt_filepath)),
       '#default_value' => isset($form_state['values']['files']) ? $form_state['values']['files'] : NULL,
       '#upload_location' => 'temporary://',
@@ -104,7 +104,7 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
   }
   $form['islandora_metadata_extras_metadata_generation_configuration']['islandora_metadata_extras_add_uuid_to_mods'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Add an &lt;identifer type="uuid"&gt; element to newly ingested MODS datastreams. Requires presence of uuidgen utility. !uuidgen_exists',
+    '#title' => t('Add an &lt;identifer type="uuid"&gt; element to newly ingested MODS datastreams. Requires presence of the "uuidgen" utility. !uuidgen_exists',
       array('!uuidgen_exists' => $uuidgen_exists_markup)),
     '#default_value' => variable_get('islandora_metadata_extras_add_uuid_to_mods', FALSE),
   );
@@ -128,11 +128,13 @@ function islandora_metadata_extras_save_dc_xslt(array $form, array &$form_state)
     $stylesheet_tmp_path = drupal_realpath($stylesheet_file->uri);
     $stylesheet_filename = drupal_realpath($stylesheet_file->filename);
     $destination = "public://" . $stylesheet_filename;
-    $moved_file = file_move($stylesheet_file, $destination, FILE_EXISTS_REPLACE);
-    $moved_file_realpath = drupal_realpath($moved_file->uri);
+    $permanent_file = file_move($stylesheet_file, $destination, FILE_EXISTS_REPLACE);
+    $permanent_file->status = 1;
+    file_save($permanent_file);
+    $permanent_file_realpath = drupal_realpath($permanent_file->uri);
     drupal_set_message(t('Stylesheet for generating DC datastreams uploaded to !dest',
-      array('!dest' => $moved_file_realpath)));
-    variable_set('islandora_metadata_extras_dc_xslt_path', $moved_file_realpath);
+      array('!dest' => $permanent_file_realpath)));
+    variable_set('islandora_metadata_extras_dc_xslt_path', $permanent_file_realpath);
 
   }
 }

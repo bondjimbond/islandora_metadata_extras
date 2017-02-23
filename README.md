@@ -39,7 +39,7 @@ Configuration options are available at Administration > Islandora > Islandora Ut
   1. enable the option in the Metadata Extras admin options form. Note that not all Islandora objects are direct members of a collection; for example, children of compound objects, and newspaper and book pages.
 * To use the option to add an identifier element containing a UUID to your MODS datastreams:
   * Enable this option in the Metadata Extras admin options. No other configuration is necessary.
-* To use an alternative XSLT stylesheet to generate DC datastreams from MODS datastreams, check the "Use a custom XSLT stylesheet to create DC datastreams." option and upload an XLST file.
+* To use an alternative XSLT stylesheet to generate DC datastreams from MODS datastreams, check the "Use a custom XSLT stylesheet to create DC datastreams" option and upload an XLST file.
   * After you enable this function, all DC datastreams on objects that are ingested or modified will be generated using your custom XSLT stylesheet.
 
 ## Maintainer
