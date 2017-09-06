@@ -55,7 +55,7 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
   $form['islandora_metadata_extras_search_results_configuration']['islandora_metadata_extras_namespace_field'] = array(
     '#type' => 'textfield',
     '#title' => t('Namespace display field'),
-    '#description' => t('Solr field configured in search settings to display the namespace. Does not have to be a real field.');
+    '#description' => t('Solr field configured in search settings to display the namespace. Does not have to be a real field.'),
     '#default_value' => variable_get('islandora_metadata_extras_namespace_field', 'PID_namespace_ss'),
   );
   $default_replacements = "islandora|System\nir|Scholar";
