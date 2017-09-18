@@ -12,11 +12,13 @@ Utility module that provides options for modifying how metadata is displayed and
   * Replace collection PID with collection label in search results.
   * Replace object namespace with an arbitrary string in search results, using an arbitrary Solr field.
 * Embedded metadata
-  * Add `<meta>` tags compatible with [Zotero](https://www.zotero.org/)
+  * Add `<meta>` tags compatible with [Zotero](https://www.zotero.org/).
 * Administrative metadata
-  * Display datastream checksums (latest datastream version only)
+  * Display datastream checksums (latest datastream version only).
 * Metadata generation
-  * Adds an identifier element with type 'uuid' to all newly ingested MODS datastreams (via web forms and batch ingest). e.g.,`<identifier type="uuid">811f4f3f-7687-4b21-b1f3-6b547501b5ba</identifier>`
+  * Adds an identifier element with type 'uuid' to all newly ingested MODS datastreams (via web forms and batch ingest). e.g.,`<identifier type="uuid">811f4f3f-7687-4b21-b1f3-6b547501b5ba</identifier>`.
+
+None of these options, with the exception of the one in the "Metadata generation" group, modify your MODS or other sources of metadata, they simply change what is displayed to the end user. The only option that modifies your content is the one that adds a UUID to your MODS datastreams.
 
 ## Requirements
 
@@ -33,7 +35,7 @@ Install as usual, see [this](https://drupal.org/documentation/install/modules-th
 Configuration options are available at Administration > Islandora > Islandora Utility Modules > Metadata Extras (`admin/islandora/tools/metadata_extras`).
 
 * To hide metadata fields that contain no content:
-  * Enable these options in the Metadata Extras admin options. No other configuration is necessary.
+  * Enable this option in the Metadata Extras admin options. No other configuration is necessary.
 * To replace yyyy-mm-dd and yyyy-mm dates with human-readable equivalents in search results:
   * Enable this option in the Metadata Extras admin options. No other configuration is necessary. Conversion respects the current user interface language. Note that this option only applies if there is a single date the metadata field matching the pattern `\d\d\d\d\-\d\d\-\d\d` or `\d\d\d\d\-\d\d`.
 * To replace the collection PID with its human-readable label:
@@ -42,7 +44,7 @@ Configuration options are available at Administration > Islandora > Islandora Ut
 * To add `<meta>` tags containing Dublin Core metadata:
   * Enable this option in the Metadata Extras admin options. No other configuration is necessary. This module provides a hook that allows other modules to alter the metadata before it is added to the page markup. See islandora_metadata_extras.api.php for more information.
 * To display datastream checksums within an object's Manage > Datastreams tab:
-  * Enable this option in the Metadata Extras admin options. No other configuration is necessary, but unless you have enabled checksums on your datastreams, for example, using the [Islandora Checksum](https://github.com/Islandora/islandora_checksum) module, no checksums will be displayed. Only the checksum for the current version of the datastream is displayed.
+  * Enable this option in the Metadata Extras admin options. No other configuration is necessary, but unless you have enabled checksums on your datastreams, for example, using the [Islandora Checksum](https://github.com/Islandora/islandora_checksum) module, no checksums will be displayed. Note that only the checksum for the current version of the datastream is displayed.
 * To add an identifier element containing a UUID to your MODS datastreams:
   * Enable this option in the Metadata Extras admin options. No other configuration is necessary.
 
