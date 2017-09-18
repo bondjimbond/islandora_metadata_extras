@@ -13,6 +13,8 @@ Utility module that provides options for modifying how metadata is displayed and
   * Replace object namespace with an arbitrary string in search results, using an arbitrary Solr field.
 * Embedded metadata
   * Add `<meta>` tags compatible with [Zotero](https://www.zotero.org/)
+* Administrative metadata
+  * Display datastream checksums (latest datastream version only)
 * Metadata generation
   * Adds an identifier element with type 'uuid' to all newly ingested MODS datastreams (via web forms and batch ingest). e.g.,`<identifier type="uuid">811f4f3f-7687-4b21-b1f3-6b547501b5ba</identifier>`
 
@@ -37,6 +39,8 @@ Configuration options are available at Administration > Islandora > Islandora Ut
 * To use the option to replace the collection PID with its human-readable label:
   1. add the field that stores your objects' collecion PID to your Solr search results, just like you would for any other field. The name of this field is configured in Administration > Islandora> Solr Index > Solr Settings > Required Solr Fields > The isMemberOfCollection Solr field. The default values is "RELS_EXT_isMemberOfCollection_uri_ms".
   1. enable the option in the Metadata Extras admin options form. Note that not all Islandora objects are direct members of a collection; for example, children of compound objects, and newspaper and book pages.
+* To use the option to display datastream checksums within an object's Manage > Datastreams tab:
+  * Enable this option in the Metadata Extras admin options. No other configuration is necessary, but unless you have enabled checksums on your datastreams, for example, using the [Islandora Checksum](https://github.com/Islandora/islandora_checksum) module, no checksums will be displayed. Only the checksum for the current version of the datastream is displayed.
 * To use the option to add an identifier element containing a UUID to your MODS datastreams:
   * Enable this option in the Metadata Extras admin options. No other configuration is necessary.
 
