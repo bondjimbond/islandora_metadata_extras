@@ -31,6 +31,27 @@ function islandora_metadata_extras_pid_to_label($pid) {
 }
 
 /**
+ * Given a PID, returns namespace converted according to replacement patterns.
+ *
+ * @param string $pid
+ *   The PID from the search result.
+ *
+ * @return string
+ *   The object's original or converted namespace.
+ */
+function islandora_metadata_extras_namespace_to_label($pid) {
+  $namespace = substr($pid, 0, strpos($pid, ':'));
+  $replacements = variable_get('islandora_metadata_extras_namespace_replacements', "islandora|System\nir|System");
+  $replacements_array = preg_split('/\r\n|\n|\r/', $replacements, -1, PREG_SPLIT_NO_EMPTY);
+
+  foreach ($replacements_array as $replacement) {
+    list($before, $after) = explode('|', $replacement);
+    $namespace = preg_replace('/' . $before . '/', trim($after), $namespace);
+  }
+  return $namespace;
+}
+
+/**
  * Adds an identifier element containing a UUID to a MODS datastream.
  *
  * @param string $pid
@@ -114,4 +135,16 @@ function islandora_metadata_extras_get_dc_values($xml) {
  */
 function islandora_metadata_extras_get_uuid() {
   return shell_exec('uuidgen');
+}
+
+function islandora_doi_datacite_normalize_resourcetype($resourcetypes) {
+  $replacements = variable_get('islandora_doi_datacite_resourcetype_replacements', "StillImage|Image\nThesis|Text");
+  $replacements_array = preg_split('/\r\n|\n|\r/', $replacements, -1, PREG_SPLIT_NO_EMPTY);
+  foreach ($resourcetypes as &$resourcetype) {
+    foreach ($replacements_array as $replacement) {
+      list($before, $after) = explode('|', $replacement);
+      $resourcetype = preg_replace('/' . $before . '/', trim($after), $resourcetype);
+    }
+  }
+  return $resourcetypes[0];
 }

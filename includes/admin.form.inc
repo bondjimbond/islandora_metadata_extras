@@ -39,18 +39,48 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
   $form['islandora_metadata_extras_search_results_configuration'] = array(
     '#type' => 'fieldset',
     '#title' => t('Search results'),
+    '#collapsible' => TRUE,
   );
   $form['islandora_metadata_extras_search_results_configuration']['islandora_metadata_extras_hide_empty_values_in_search_results'] = array(
     '#type' => 'checkbox',
     '#title' => t('Hide empty fields in search results.'),
     '#default_value' => variable_get('islandora_metadata_extras_hide_empty_values_in_search_results', FALSE),
   );
+  $form['islandora_metadata_extras_search_results_configuration']['islandora_metadata_extras_rewrite_namespace'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Replace namespaces in search results according to a defined pattern.'),
+    '#default_value' => variable_get('islandora_metadata_extras_rewrite_namespace', FALSE),
+    '#collapsible' => TRUE,
+  );
+  $form['islandora_metadata_extras_search_results_configuration']['islandora_metadata_extras_namespace_field'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Namespace display field'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="islandora_metadata_extras_rewrite_namespace"]' => array('checked' => TRUE),
+      ),
+    ),
+    '#description' => t('Solr field configured in search settings to display the namespace. Does not need to exist in your Solr configuration, but must be added to your Solr search result display fields (admin/islandora/search/islandora_solr/settings).'),
+    '#default_value' => variable_get('islandora_metadata_extras_namespace_field', 'PID_namespace_ss'),
+  );
+  $default_replacements = "islandora|System\nir|Scholar";
+  $form['islandora_metadata_extras_search_results_configuration']['islandora_metadata_extras_namespace_replacements'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Namespace replacements'),
+    '#rows' => 10,
+    '#states' => array(
+      'visible' => array(
+        ':input[name="islandora_metadata_extras_rewrite_namespace"]' => array('checked' => TRUE),
+      ),
+    ),
+    '#default_value' => variable_get('islandora_metadata_extras_namespace_replacements', $default_replacements),
+    '#description' => t("Place each namespace and replacement value pair, separated by a |, on its own line."),
+  );
   $form['islandora_metadata_extras_search_results_configuration']['islandora_metadata_extras_use_collection_label'] = array(
     '#type' => 'checkbox',
     '#title' => t('Replace collection PID with collection label in search results.'),
     '#default_value' => variable_get('islandora_metadata_extras_use_collection_label', FALSE),
   );
-
   $form['islandora_metadata_extras_embedded_metadata'] = array(
     '#type' => 'fieldset',
     '#title' => t('Embedded metadata'),
