@@ -115,3 +115,33 @@ function islandora_metadata_extras_islandora_datastream_alter($object, $datastre
     }
   }
 }
+
+/**
+ * Theme preprocess function.
+ */
+function islandora_metadata_extras_preprocess_islandora_default_edit(&$variables) {
+  if (variable_get('islandora_metadata_extras_show_datastream_checksums', FALSE)) {
+    $variables['datastream_table']['header'][] = array('data' => t('Checksum'));
+    $islandora_object = $variables['islandora_object'];
+    $rows = $variables['datastream_table']['rows'];
+
+    foreach ($islandora_object as $ds) {
+      if ($ds->checksumType == 'DISABLED') {
+        $data = $ds->checksumType;
+      }
+      else {
+        $data = $ds->checksumType . ': ' . $ds->checksum;
+      }
+      $checksum_data = array(
+        'class' => 'datastream-checksum',
+        'data' => $data,
+      );
+      $checksums[] = $checksum_data;
+    }
+
+    for ($i = 0; $i < count($rows); $i++) {
+      $rows[$i][] = $checksums[$i];
+    }
+    $variables['datastream_table']['rows'] = $rows;
+  }
+}
