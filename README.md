@@ -32,16 +32,18 @@ Install as usual, see [this](https://drupal.org/documentation/install/modules-th
 
 Configuration options are available at Administration > Islandora > Islandora Utility Modules > Metadata Extras (`admin/islandora/tools/metadata_extras`).
 
-* To use the options to hide metadata fields that contain no content:
+* To hide metadata fields that contain no content:
   * Enable these options in the Metadata Extras admin options. No other configuration is necessary.
-* To use the option to replace yyyy-mm-dd and yyyy-mm dates with human-readable equivalents in search results:
+* To replace yyyy-mm-dd and yyyy-mm dates with human-readable equivalents in search results:
   * Enable this option in the Metadata Extras admin options. No other configuration is necessary. Conversion respects the current user interface language. Note that this option only applies if there is a single date the metadata field matching the pattern `\d\d\d\d\-\d\d\-\d\d` or `\d\d\d\d\-\d\d`.
-* To use the option to replace the collection PID with its human-readable label:
+* To replace the collection PID with its human-readable label:
   1. add the field that stores your objects' collecion PID to your Solr search results, just like you would for any other field. The name of this field is configured in Administration > Islandora> Solr Index > Solr Settings > Required Solr Fields > The isMemberOfCollection Solr field. The default values is "RELS_EXT_isMemberOfCollection_uri_ms".
   1. enable the option in the Metadata Extras admin options form. Note that not all Islandora objects are direct members of a collection; for example, children of compound objects, and newspaper and book pages.
-* To use the option to display datastream checksums within an object's Manage > Datastreams tab:
+* To add `<meta>` tags containing Dublin Core metadata:
+  * Enable this option in the Metadata Extras admin options. No other configuration is necessary. This module provides a hook that allows other modules to alter the metadata before it is added to the page markup. See islandora_metadata_extras.api.php for more information.
+* To display datastream checksums within an object's Manage > Datastreams tab:
   * Enable this option in the Metadata Extras admin options. No other configuration is necessary, but unless you have enabled checksums on your datastreams, for example, using the [Islandora Checksum](https://github.com/Islandora/islandora_checksum) module, no checksums will be displayed. Only the checksum for the current version of the datastream is displayed.
-* To use the option to add an identifier element containing a UUID to your MODS datastreams:
+* To add an identifier element containing a UUID to your MODS datastreams:
   * Enable this option in the Metadata Extras admin options. No other configuration is necessary.
 
 ## Maintainer
