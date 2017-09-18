@@ -50,7 +50,7 @@ Configuration options are available at Administration > Islandora > Islandora Ut
 
 ## Development and feedback
 
-Pull requests are welcome, as are suggestions and use cases.
+Bug reports, use cases, feature requests, and pull requests are welcome. Please see the CONTRIBUTING.md file for more information.
 
 ## License
 
