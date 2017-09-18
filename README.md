@@ -10,6 +10,7 @@ Utility module that provides options for modifying how metadata is displayed and
 * Search results
   * Hide metadata fields that contain no content.
   * Replace collection PID with collection label in search results.
+  * Replace object namespace with an arbitrary string in search results, using an arbitrary Solr field.
 * Embedded metadata
   * Add `<meta>` tags compatible with [Zotero](https://www.zotero.org/)
 * Metadata generation
