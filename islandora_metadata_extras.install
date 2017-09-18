@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * This file contains all install related hooks.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function islandora_metadata_extras_uninstall() {
+  $variables = array(
+    'islandora_metadata_extras_embed_dc_in_head',
+    'islandora_metadata_extras_use_collection_label',
+    'islandora_solr_member_of_collection_field',
+    'islandora_metadata_extras_rewrite_namespace',
+    'islandora_metadata_extras_namespace_field',
+    'islandora_metadata_extras_hide_empty_metadata_values',
+    'islandora_metadata_extras_show_pretty_dates',
+    'islandora_metadata_extras_hide_empty_values_in_search_results',
+    'islandora_metadata_extras_add_uuid_to_mods',
+    'islandora_metadata_extras_show_datastream_checksums',
+  );
+  array_walk($variables, 'variable_del');
+}
