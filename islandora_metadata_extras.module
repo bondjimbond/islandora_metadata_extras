@@ -158,7 +158,10 @@ function islandora_metadata_extras_preprocess_islandora_default_edit(&$variables
  * Menu callback.
  */
 function islandora_metadata_extras_get_solr_xml($object) {
-  $solr_response = drupal_http_request("http://localhost:8080/solr/collection1/select?q=PID%3Aislandora%5C%3A48&wt=xml&indent=true");
+  $pid = preg_replace('/:/', '\:', $object->id);
+  $solr_url = variable_get('islandora_solr_url', 'http://localhost:8080/solr') .
+    "/collection1/select?q=PID:" . $pid . "&wt=xml&indent=true";
+  $solr_response = drupal_http_request($solr_url);
   $document = $solr_response->data;
   return '<pre>' . htmlspecialchars($document) . '</pre>';
 }
