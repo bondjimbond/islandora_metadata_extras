@@ -19,6 +19,14 @@ function islandora_metadata_extras_menu() {
     'file' => 'includes/admin.form.inc',
     'type' => MENU_NORMAL_ITEM,
   );
+  $items['islandora/object/%islandora_object/manage/solr'] = array(
+    'title' => 'Solr Document',
+    'page callback' => 'islandora_metadata_extras_get_solr_xml',
+    'page arguments' => array(2),
+    'access callback' => 'islandora_object_access_callback',
+    'access arguments' => array(ISLANDORA_MANAGE_PROPERTIES, 2),
+    'type' => MENU_LOCAL_TASK,
+  );
   return $items;
 }
 
@@ -144,4 +152,13 @@ function islandora_metadata_extras_preprocess_islandora_default_edit(&$variables
     }
     $variables['datastream_table']['rows'] = $rows;
   }
+}
+
+/**
+ * Menu callback.
+ */
+function islandora_metadata_extras_get_solr_xml($object) {
+  $solr_response = drupal_http_request("http://localhost:8080/solr/collection1/select?q=PID%3Aislandora%5C%3A48&wt=xml&indent=true");
+  $document = $solr_response->data;
+  return '<pre>' . htmlspecialchars($document) . '</pre>';
 }
