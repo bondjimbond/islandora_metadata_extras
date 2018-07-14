@@ -15,6 +15,7 @@ Utility module that provides options for modifying how metadata is displayed and
   * Add `<meta>` tags compatible with [Zotero](https://www.zotero.org/).
 * Administrative metadata
   * Display datastream checksums (latest datastream version only).
+  * Adds a "Solr Document" subtab under each object's Manage menu showing the object's Solr document in XML format.
 * Metadata generation
   * Adds an identifier element with type 'uuid' to all newly ingested MODS datastreams (via web forms and batch ingest). e.g.,`<identifier type="uuid">811f4f3f-7687-4b21-b1f3-6b547501b5ba</identifier>`.
 
