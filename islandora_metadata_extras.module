@@ -165,3 +165,19 @@ function islandora_metadata_extras_get_solr_xml($object) {
   $document = $solr_response->data;
   return '<pre>' . htmlspecialchars($document) . '</pre>';
 }
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function islandora_metadata_extras_theme_registry_alter(&$theme_registry) {
+  // Override the default islandora-solr-metadata-display.tpl.php.
+  if (isset($theme_registry['islandora_solr_metadata_display'])) {
+    if (variable_get('islandora_metadata_extras_use_external_template', FALSE)) {
+      $module_path = drupal_get_path('module', 'islandora_metadata_extras');
+      $theme_registry['islandora_solr_metadata_display']['theme path'] = $module_path;
+      $theme_registry['islandora_solr_metadata_display']['includes'][] = $module_path . '/theme/theme.inc';
+      $theme_registry['islandora_solr_metadata_display']['process functions'][] = 'islandora_metadata_extras_templated_metadata_display';
+      $theme_registry['islandora_solr_metadata_display']['template'] = $module_path . '/theme/islandora-solr-metadata-display';
+    }
+  }
+}

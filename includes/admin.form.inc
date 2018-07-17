@@ -35,6 +35,11 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
     '#title' => t('Replace yyyy-mm-dd and yyyy-mm dates in object metadata displays with  human-readable equivalents.'),
     '#default_value' => variable_get('islandora_metadata_extras_show_pretty_dates', FALSE),
   );
+  $form['islandora_metadata_extras_object_metadata_display']['islandora_metadata_extras_use_external_template'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Use an external template to render metadata.'),
+    '#default_value' => variable_get('islandora_metadata_extras_use_external_template', FALSE),
+  );
 
   $form['islandora_metadata_extras_search_results_configuration'] = array(
     '#type' => 'fieldset',
