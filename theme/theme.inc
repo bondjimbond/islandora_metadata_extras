@@ -18,7 +18,6 @@
  *     classes to fieldsets.
  */
 function islandora_metadata_extras_templated_metadata_display(array &$variables) {
-  dd("Hi from function");
   module_load_include('inc', 'islandora_solr_metadata', 'includes/db');
   module_load_include('inc', 'islandora', 'includes/utilities');
   drupal_add_js('misc/form.js');
@@ -33,8 +32,23 @@ function islandora_metadata_extras_templated_metadata_display(array &$variables)
     $field = islandora_solr_metadata_get_fields($configuration_id['configuration_id']);
     $db_fields = array_merge($db_fields, $field);
   }
+  foreach ($db_fields as $solr_field => $value) {
+    if (isset($solr_fields[$solr_field])) {
+      continue;
+    }
+    // Make an array for use later on.
+    $solr_fields[$solr_field] = $value + array(
+      'value' => array(),
+    );
+  }
 
-  $variables['foo'] = 'I am foo, pleased to meet you.';
+  require_once '/var/www/drupal/sites/all/libraries/twig/lib/Twig/Autoloader.php';
+  Twig_Autoloader::register();
+  $loader = new Twig_Loader_Array(array(
+    'index' => 'I am the output of a template, {{ name }}!',
+  ));
+  $twig = new Twig_Environment($loader);
+  $variables['twig_content'] = $twig->render('index', array('name' => 'friend'));
 
   $separator = variable_get('islandora_solr_metadata_field_value_separator', "\n");
 

@@ -24,13 +24,8 @@
   <legend><span class="fieldset-legend"><?php print t('Details'); ?></span></legend>
   <div class="fieldset-wrapper">
 
-  <div>Templated metadata goes here.</div>
-  <div>
-    <pre>
-      <!-- To do: In process function, replace $solr_fields with the output of the template. -->
-      <?php var_export($solr_fields); ?>
-    </pre>
-  </div>
+  <!-- To do: In process function, replace $solr_fields with the output of the template. -->
+  <?php print $twig_content; ?>
 
   </div>
 </fieldset>
