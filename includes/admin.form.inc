@@ -35,10 +35,31 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
     '#title' => t('Replace yyyy-mm-dd and yyyy-mm dates in object metadata displays with  human-readable equivalents.'),
     '#default_value' => variable_get('islandora_metadata_extras_show_pretty_dates', FALSE),
   );
+  $twig_extensions = array('xml', 'twig');
   $form['islandora_metadata_extras_object_metadata_display']['islandora_metadata_extras_use_external_template'] = array(
     '#type' => 'checkbox',
     '#title' => t('Use an external template to render metadata.'),
     '#default_value' => variable_get('islandora_metadata_extras_use_external_template', FALSE),
+  );
+
+  $form['islandora_metadata_extras_object_metadata_display']['external_template'] = array(
+    '#title' => t('Twig template to apply to Solr metadata'),
+    '#type' => 'managed_file',
+    '#required' => FALSE,
+    '#description' => t('Select a file to upload. Existing files in your site\'s public directory with the same name will be overwritten. Allowed file types: <strong>@ext</strong>.',
+      array(
+        '@ext' => implode(', ', $twig_extensions),
+    )),
+    '#default_value' => isset($form_state['values']['files']) ? $form_state['values']['files'] : NULL,
+    '#upload_location' => 'public://',
+    '#upload_validators' => array(
+      'file_validate_extensions' => $twig_extensions,
+    ),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="islandora_metadata_extras_use_external_template"]' => array('checked' => TRUE),
+      ),
+    ),
   );
 
   $form['islandora_metadata_extras_search_results_configuration'] = array(
