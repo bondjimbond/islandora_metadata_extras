@@ -27,6 +27,15 @@ function islandora_metadata_extras_menu() {
     'access arguments' => array(ISLANDORA_MANAGE_PROPERTIES, 2),
     'type' => MENU_LOCAL_TASK,
   );
+  $items['islandora/object/%islandora_object/edit_metadata'] = array(
+    'title' => 'Edit metadata',
+    'page callback' => 'islandora_metadata_extras_edit_metadata_direct_link',
+    'page arguments' => array(2),
+    'access callback' => 'islandora_object_access_callback',
+    'access arguments' => array(ISLANDORA_MANAGE_PROPERTIES, 2),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 10,
+  );
   return $items;
 }
 
@@ -164,4 +173,29 @@ function islandora_metadata_extras_get_solr_xml($object) {
   $solr_response = drupal_http_request($solr_url);
   $document = $solr_response->data;
   return '<pre>' . htmlspecialchars($document) . '</pre>';
+}
+
+/**
+ * Menu callback.
+ */
+function islandora_metadata_extras_edit_metadata_direct_link($object) {
+  $configured_dsids = variable_get('islandora_metadata_extras_metadata_dsids', 'MODS,MADS');
+  $dsids = explode(',', $configured_dsids);
+  // Cycle through each DSID and choose the first one that the object has.
+  // We don't need to keep track since drupal_goto() exits.
+  foreach ($dsids as $dsid) {
+    $dsid_to_link_to = trim($dsid);
+    if ($object[$dsid_to_link_to]) {
+      drupal_goto('islandora/object/' . $object->id . '/datastream/MODS/edit');
+    }
+    else {
+      drupal_set_message(
+        t('This object does not have any of the configured datastreams (!dsids).',
+        array('!dsids' => $configured_dsids)),
+        'warning'
+      );
+      return t('This object does not have any of the configured datastreams (!dsids).',
+        array('!dsids' => $configured_dsids));
+    }
+  }
 }

@@ -112,7 +112,7 @@ function islandora_metadata_extras_add_uuid_to_mods($pid, $mods_xml) {
  */
 function islandora_metadata_extras_get_dc_values($xml) {
   $dc_values = array();
-  $dom = new DOMDocument;
+  $dom = new DOMDocument();
   $dom->loadXML($xml);
   $elements = $dom->getElementsByTagNameNS('http://purl.org/dc/elements/1.1/', '*');
   foreach ($elements as $e) {
@@ -135,16 +135,4 @@ function islandora_metadata_extras_get_dc_values($xml) {
  */
 function islandora_metadata_extras_get_uuid() {
   return shell_exec('uuidgen');
-}
-
-function islandora_doi_datacite_normalize_resourcetype($resourcetypes) {
-  $replacements = variable_get('islandora_doi_datacite_resourcetype_replacements', "StillImage|Image\nThesis|Text");
-  $replacements_array = preg_split('/\r\n|\n|\r/', $replacements, -1, PREG_SPLIT_NO_EMPTY);
-  foreach ($resourcetypes as &$resourcetype) {
-    foreach ($replacements_array as $replacement) {
-      list($before, $after) = explode('|', $replacement);
-      $resourcetype = preg_replace('/' . $before . '/', trim($after), $resourcetype);
-    }
-  }
-  return $resourcetypes[0];
 }

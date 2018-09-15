@@ -20,6 +20,8 @@ function islandora_metadata_extras_uninstall() {
     'islandora_metadata_extras_hide_empty_values_in_search_results',
     'islandora_metadata_extras_add_uuid_to_mods',
     'islandora_metadata_extras_show_datastream_checksums',
+    'islandora_metadata_extras_show_edit_metadata_tab',
+    'islandora_metadata_extras_metadata_dsids',
   );
   array_walk($variables, 'variable_del');
 }

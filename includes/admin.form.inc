@@ -39,7 +39,6 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
   $form['islandora_metadata_extras_search_results_configuration'] = array(
     '#type' => 'fieldset',
     '#title' => t('Search results'),
-    '#collapsible' => TRUE,
   );
   $form['islandora_metadata_extras_search_results_configuration']['islandora_metadata_extras_hide_empty_values_in_search_results'] = array(
     '#type' => 'checkbox',
@@ -99,6 +98,22 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
     '#type' => 'checkbox',
     '#title' => t('Display datastream checksums (latest datastream version only)'),
     '#default_value' => variable_get('islandora_metadata_extras_show_datastream_checksums', FALSE),
+  );
+  $form['islandora_metadata_extras_admin_metadata']['islandora_metadata_extras_show_edit_metadata_tab'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Display tab containing direct link to edit metadata'),
+    '#default_value' => variable_get('islandora_metadata_extras_show_edit_metadata_tab', FALSE),
+  );
+  $form['islandora_metadata_extras_admin_metadata']['islandora_metadata_extras_metadata_dsids'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Metadata datastream IDs'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="islandora_metadata_extras_show_edit_metadata_tab"]' => array('checked' => TRUE),
+      ),
+    ),
+    '#description' => t('Comma-separate list of datastream IDs to link to. If an object does not have one of these datastreams, the next one is used.'),
+    '#default_value' => variable_get('islandora_metadata_extras_metadata_dsids', 'MODS,MADS'),
   );
 
   $form['islandora_metadata_extras_metadata_generation_configuration'] = array(
