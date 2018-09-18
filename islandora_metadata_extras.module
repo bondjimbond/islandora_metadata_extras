@@ -23,20 +23,50 @@ function islandora_metadata_extras_menu() {
     'title' => 'Solr Document',
     'page callback' => 'islandora_metadata_extras_get_solr_xml',
     'page arguments' => array(2),
-    'access callback' => 'islandora_object_access_callback',
-    'access arguments' => array(ISLANDORA_MANAGE_PROPERTIES, 2),
+    'access callback' => 'islandora_metadata_extras_solr_document_access_callback',
+    'access arguments' => array(2),
     'type' => MENU_LOCAL_TASK,
   );
   $items['islandora/object/%islandora_object/edit_metadata'] = array(
     'title' => 'Edit metadata',
     'page callback' => 'islandora_metadata_extras_edit_metadata_direct_link',
     'page arguments' => array(2),
-    'access callback' => 'islandora_object_access_callback',
-    'access arguments' => array(ISLANDORA_MANAGE_PROPERTIES, 2),
+    'access callback' => 'islandora_metadata_extras_edit_metadata_tab_access_callback',
+    'access arguments' => array(2),
     'type' => MENU_LOCAL_TASK,
     'weight' => 10,
   );
   return $items;
+}
+
+/**
+ * Access callback.
+ *
+ * @param AbstractObject $object
+ *   The Islandora object.
+ *
+ * @return bool
+ *   TRUE if the user is allowed to access the Solr document, FALSE
+ *   otherwise.
+ */
+function islandora_metadata_extras_solr_document_access_callback($object) {
+  return islandora_object_access(ISLANDORA_MANAGE_PROPERTIES, $object) &&
+    variable_get('islandora_metadata_extras_show_solr_doc', FALSE);
+}
+
+/**
+ * Access callback.
+ *
+ * @param AbstractObject $object
+ *   The Islandora object.
+ *
+ * @return bool
+ *   TRUE if the user is allowed to access the "edit metadata" link, FALSE
+ *   otherwise.
+ */
+function islandora_metadata_extras_edit_metadata_tab_access_callback($object) {
+  return islandora_object_access(ISLANDORA_METADATA_EDIT, $object) &&
+    variable_get('islandora_metadata_extras_show_edit_metadata_tab', FALSE);
 }
 
 /**

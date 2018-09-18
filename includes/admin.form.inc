@@ -94,14 +94,14 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
     '#type' => 'fieldset',
     '#title' => t('Administrative metadata'),
   );
-  $form['islandora_metadata_extras_admin_metadata']['islandora_metadata_extras_show_datastream_checksums'] = array(
+  $form['islandora_metadata_extras_admin_metadata']['islandora_metadata_extras_show_solr_doc'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Display datastream checksums (latest datastream version only)'),
-    '#default_value' => variable_get('islandora_metadata_extras_show_datastream_checksums', FALSE),
+    '#title' => t("Display tab containing an object's Solr document."),
+    '#default_value' => variable_get('islandora_metadata_extras_show_solr_doc', FALSE),
   );
   $form['islandora_metadata_extras_admin_metadata']['islandora_metadata_extras_show_edit_metadata_tab'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Display tab containing direct link to edit metadata'),
+    '#title' => t("Display tab containing direct link to edit an object's metadata."),
     '#default_value' => variable_get('islandora_metadata_extras_show_edit_metadata_tab', FALSE),
   );
   $form['islandora_metadata_extras_admin_metadata']['islandora_metadata_extras_metadata_dsids'] = array(
@@ -114,6 +114,11 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
     ),
     '#description' => t('Comma-separate list of datastream IDs to link to. If an object does not have one of these datastreams, the next one is used.'),
     '#default_value' => variable_get('islandora_metadata_extras_metadata_dsids', 'MODS,MADS'),
+  );
+  $form['islandora_metadata_extras_admin_metadata']['islandora_metadata_extras_show_datastream_checksums'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Display datastream checksums (latest datastream version only).'),
+    '#default_value' => variable_get('islandora_metadata_extras_show_datastream_checksums', FALSE),
   );
 
   $form['islandora_metadata_extras_metadata_generation_configuration'] = array(
