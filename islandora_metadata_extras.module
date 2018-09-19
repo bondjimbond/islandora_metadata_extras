@@ -216,16 +216,19 @@ function islandora_metadata_extras_edit_metadata_direct_link($object) {
   foreach ($dsids as $dsid) {
     $dsid_to_link_to = trim($dsid);
     if ($object[$dsid_to_link_to]) {
-      drupal_goto('islandora/object/' . $object->id . '/datastream/MODS/edit');
+      drupal_goto('islandora/object/' . $object->id . '/datastream/' . $dsid_to_link_to . '/edit');
     }
     else {
-      drupal_set_message(
-        t('This object does not have any of the configured datastreams (!dsids).',
-        array('!dsids' => $configured_dsids)),
-        'warning'
-      );
-      return t('This object does not have any of the configured datastreams (!dsids).',
-        array('!dsids' => $configured_dsids));
+      continue;
     }
   }
+  drupal_set_message(
+    t('This object does not have any of the configured datastreams (!dsids).',
+    array('!dsids' => $configured_dsids)),
+    'warning'
+  );
+  // We want to display something on the resulting page,
+  // so return the same message.
+  return t('This object does not have any of the configured datastreams (!dsids).',
+    array('!dsids' => $configured_dsids));
 }
