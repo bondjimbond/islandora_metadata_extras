@@ -197,12 +197,14 @@ function islandora_metadata_extras_preprocess_islandora_default_edit(&$variables
  * Menu callback.
  */
 function islandora_metadata_extras_get_solr_xml($object) {
+  $query_processor = new IslandoraSolrQueryProcessor();
   $pid = preg_replace('/:/', '\:', $object->id);
-  $solr_url = variable_get('islandora_solr_url', 'http://localhost:8080/solr') .
-    "/collection1/select?q=PID:" . $pid . "&wt=xml&indent=true";
-  $solr_response = drupal_http_request($solr_url);
-  $document = $solr_response->data;
-  return '<pre>' . htmlspecialchars($document) . '</pre>';
+  $query_processor->solrQuery = 'PID:' . $pid;
+  $query_processor->solrLimit = '1';
+  $query_processor->solrParams['wt'] = 'xml';
+  $query_processor->solrParams['indent'] = TRUE;
+  $query_processor->executeQuery(FALSE);
+  return '<pre>' . var_export($query_processor->islandoraSolrResult['response']['objects'][0]['solr_doc'], TRUE) . '</pre>';
 }
 
 /**
