@@ -204,7 +204,7 @@ function islandora_metadata_extras_get_solr_xml($object) {
   $query_processor->solrParams['wt'] = 'xml';
   $query_processor->solrParams['indent'] = TRUE;
   $query_processor->executeQuery(FALSE);
-  return '<pre>' . var_export($query_processor->islandoraSolrResult['response']['objects'][0]['solr_doc'], TRUE) . '</pre>';
+  return '<pre>' . json_encode($query_processor->islandoraSolrResult['response']['objects'][0]['solr_doc'],  JSON_PRETTY_PRINT) . '</pre>';
 }
 
 /**
