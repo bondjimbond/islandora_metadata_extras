@@ -5,3 +5,4 @@ core = 7.x
 package = Islandora Tools
 dependencies[] = islandora
 dependencies[] = islandora_solr
+configure = admin/islandora/tools/metadata_extras
