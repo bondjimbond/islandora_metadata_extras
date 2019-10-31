@@ -87,17 +87,6 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
     '#default_value' => variable_get('islandora_metadata_extras_rewrite_facets', FALSE),
     '#collapsible' => TRUE,
   );
-  $form['islandora_metadata_extras_search_results_configuration']['islandora_metadata_extras_facet_field'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Facet display field'),
-    '#states' => array(
-      'visible' => array(
-        ':input[name="islandora_metadata_extras_rewrite_facets"]' => array('checked' => TRUE),
-      ),
-    ),
-    '#description' => t('Solr field used for the target facet.'),
-    '#default_value' => variable_get('islandora_metadata_extras_facet_field', 'mods_accessCondition_use_and_reproduction_ms'),
-  );
   $default_facet_replacements = "";
   $form['islandora_metadata_extras_search_results_configuration']['islandora_metadata_extras_facet_replacements'] = array(
     '#type' => 'textarea',
