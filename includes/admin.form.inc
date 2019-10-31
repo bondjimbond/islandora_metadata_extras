@@ -80,6 +80,38 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
     '#title' => t('Replace collection PID with collection label in search results.'),
     '#default_value' => variable_get('islandora_metadata_extras_use_collection_label', FALSE),
   );
+
+  $form['islandora_metadata_extras_search_results_configuration']['islandora_metadata_extras_rewrite_facets'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Replace facet values with configured text.'),
+    '#default_value' => variable_get('islandora_metadata_extras_rewrite_facets', FALSE),
+    '#collapsible' => TRUE,
+  );
+  $form['islandora_metadata_extras_search_results_configuration']['islandora_metadata_extras_facet_field'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Facet display field'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="islandora_metadata_extras_rewrite_facets"]' => array('checked' => TRUE),
+      ),
+    ),
+    '#description' => t('Solr field used for the target facet.'),
+    '#default_value' => variable_get('islandora_metadata_extras_facet_field', 'mods_accessCondition_use_and_reproduction_ms'),
+  );
+  $default_facet_replacements = "";
+  $form['islandora_metadata_extras_search_results_configuration']['islandora_metadata_extras_facet_replacements'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Facet value replacements'),
+    '#rows' => 10,
+    '#states' => array(
+      'visible' => array(
+        ':input[name="islandora_metadata_extras_rewrite_facets"]' => array('checked' => TRUE),
+      ),
+    ),
+    '#default_value' => variable_get('islandora_metadata_extras_facet_replacements', $default_facet_replacements),
+    '#description' => t("Place each original value and replacement value pair, separated by a |, on its own line."),
+  );
+
   $form['islandora_metadata_extras_embedded_metadata'] = array(
     '#type' => 'fieldset',
     '#title' => t('Embedded metadata'),

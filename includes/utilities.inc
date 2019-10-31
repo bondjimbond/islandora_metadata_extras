@@ -53,6 +53,39 @@ function islandora_metadata_extras_namespace_to_label($pid) {
 }
 
 /**
+ * Given a facet value, returns text converted according to replacement patterns.
+ *
+ * @param string $value
+ *   The facet value from the search result.
+ *
+ * @return string
+ *   The object's original or converted namespace.
+ */
+function islandora_metadata_extras_facet_convert($value) {
+
+  // Todo: break apart the string, get the bit between > and </a>, modify that and preseve the rest
+  $value_split = explode(">", $value);
+  $value_first = $value_split[0] . ">";
+  $value_last = "</a>";
+  $value_content = explode("</a", $value_split[1]);
+  $value_content = $value_content[0];
+
+  $replacements = variable_get('islandora_metadata_extras_facet_replacements', "");
+  $replacements_array = preg_split('/\r\n|\n|\r/', $replacements, -1, PREG_SPLIT_NO_EMPTY);
+  foreach ($replacements_array as $replacement) {
+    list($before, $after) = explode('|', $replacement);
+    if ($value_content == $before) {
+      $value_content = $after;
+    }
+  }
+
+  $value = $value_first . $value_content . $value_last;
+
+  return $value;
+}
+
+
+/**
  * Adds an identifier element containing a UUID to a MODS datastream.
  *
  * @param string $pid
