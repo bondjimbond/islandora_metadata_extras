@@ -118,14 +118,17 @@ function islandora_metadata_extras_islandora_solr_object_result_alter(&$search_r
 
 
 /**
- * Implements hook_islandora_solr_facet_variables_alter().
+ * Implements hook_islandora_solr_facet_bucket_classes_alter().
  */
-function islandora_metadata_extras_islandora_solr_facet_variables_alter(&$facets, &$facet_field) {
+function islandora_metadata_extras_islandora_solr_facet_bucket_classes_alter(&$buckets, $query_processor) {
   if (variable_get('islandora_metadata_extras_rewrite_facets', FALSE)) {
     $facet_field_configured = variable_get('islandora_metadata_extras_facet_field', 'mods_accessCondition_use_and_reproduction_ms');
-    foreach ($facets AS &$facet) {
-      $facet['link'] = islandora_metadata_extras_facet_convert($facet['link']);
-    }          
+    foreach ($buckets AS &$facet) {
+      $facet_used = explode(":", $facet_field_configured);
+      if (in_array($facet_field_configured, $facet_used)) {
+        $facet['label'] = islandora_metadata_extras_facet_convert($facet['label']);
+      }
+    } 
   }
 }
 
