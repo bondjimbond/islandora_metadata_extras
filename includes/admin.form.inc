@@ -86,6 +86,7 @@ function islandora_metadata_extras_admin_form(array $form, array &$form_state) {
     '#title' => t('Replace facet values with configured text.'),
     '#default_value' => variable_get('islandora_metadata_extras_rewrite_facets', FALSE),
     '#collapsible' => TRUE,
+    '#description' => t('Rewrite the facet values displayed in your search sidebar for selected Solr fields. Does not affect Facet Pages.'),
   );
   $form['islandora_metadata_extras_search_results_configuration']['islandora_metadata_extras_facet_field'] = array(
     '#type' => 'textfield',
