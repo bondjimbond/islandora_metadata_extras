@@ -10,6 +10,7 @@ Utility module that provides options for modifying how metadata is displayed and
 * Search results
   * Hide metadata fields that contain no content.
   * Replace collection PID with collection label in search results.
+  * Replace the values displayed in the search facet sidebar for selected Solr fields. Does not apply to Facet Pages.
   * Replace object namespace with an arbitrary string in search results, using an arbitrary Solr field.
 * Embedded metadata
   * Add `<meta>` tags compatible with [Zotero](https://www.zotero.org/).
@@ -43,6 +44,10 @@ Configuration options are available at Administration > Islandora > Islandora Ut
 * To replace the collection PID with its human-readable label:
   1. add the field that stores your objects' collecion PID to your Solr search results, just like you would for any other field. The name of this field is configured in Administration > Islandora> Solr Index > Solr Settings > Required Solr Fields > The isMemberOfCollection Solr field. The default values is "RELS_EXT_isMemberOfCollection_uri_ms".
   1. enable the option in the Metadata Extras admin options form. Note that not all Islandora objects are direct members of a collection; for example, children of compound objects, and newspaper and book pages.
+* To rewrite the text of facet values in the search sidebar:
+  1. Enable this option in the Metadata Extras admin options.
+  2. Enter the Solr field whose values you wish to rewrite. It must be one of your configured facet fields.
+  3. Enter the values you expect, followed by the pipe "|" character, and the values you wish to replace them with.
 * To add `<meta>` tags containing Dublin Core metadata:
   * Enable this option in the Metadata Extras admin options. No other configuration is necessary. This module provides a hook that allows other modules to alter the metadata before it is added to the page markup. See islandora_metadata_extras.api.php for more information.
 * To display datastream checksums within an object's Manage > Datastreams tab:
