@@ -253,3 +253,34 @@ function islandora_metadata_extras_edit_metadata_direct_link($object) {
   return t('This object does not have any of the configured datastreams (!dsids).',
     array('!dsids' => $configured_dsids));
 }
+
+/**
+ * Implements validation from the Form API.
+ * 
+ * @param $form
+ *   A structured array containing the elements and properties of the form.
+ * @param $form_state
+ *   An array that stores information about the form's current state 
+ *   during processing.
+ */
+function islandora_metadata_extras_admin_form_validate($form, &$form_state){
+  $break_character = "|";
+  $rewrite_namespace = $form_state['values']['islandora_metadata_extras_rewrite_namespace'];
+  $rewrite_facets = $form_state['values']['islandora_metadata_extras_rewrite_facets'];
+  if ($rewrite_namespace == 1) {
+    $namespace_replacements = explode("\n", $form_state['values']['islandora_metadata_extras_namespace_replacements']);
+    foreach ($namespace_replacements AS $replacement) {
+      if (strpos($replacement, $break_character) == false) {
+        form_set_error('islandora_metadata_extras', t('One or more of your replacements is missing the | character.'));
+      }
+    }
+  }
+  if ($rewrite_facets == 1) {
+    $facet_replacements = explode("\n", $form_state['values']['islandora_metadata_extras_facet_replacements']);
+    foreach ($facet_replacements AS $replacement) {
+      if (strpos($replacement, $break_character) == false) {
+        form_set_error('islandora_metadata_extras', t('One or more of your replacements is missing the | character.'));
+      }
+    }
+  }
+}
