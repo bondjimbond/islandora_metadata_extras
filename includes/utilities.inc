@@ -43,10 +43,13 @@ function islandora_metadata_extras_namespace_to_label($pid) {
   $namespace = substr($pid, 0, strpos($pid, ':'));
   $replacements = variable_get('islandora_metadata_extras_namespace_replacements', "islandora|System\nir|System");
   $replacements_array = preg_split('/\r\n|\n|\r/', $replacements, -1, PREG_SPLIT_NO_EMPTY);
+  $break_character = "|";
   foreach ($replacements_array as $replacement) {
-    list($before, $after) = explode('|', $replacement);
-    if ($namespace == $before) {
-      $namespace = $after;
+    if (strpos($replacement, $break_character) !== false) {
+      list($before, $after) = explode($break_character, $replacement);
+      if ($namespace == $before) {
+        $namespace = $after;
+      }
     }
   }
   return $namespace;
@@ -64,10 +67,13 @@ function islandora_metadata_extras_namespace_to_label($pid) {
 function islandora_metadata_extras_facet_convert($value) {
   $replacements = variable_get('islandora_metadata_extras_facet_replacements', "");
   $replacements_array = preg_split('/\r\n|\n|\r/', $replacements, -1, PREG_SPLIT_NO_EMPTY);
+  $break_character = "|";
   foreach ($replacements_array as $replacement) {
-    list($before, $after) = explode('|', $replacement);
-    if ($value == $before) {
-      $value = $after;
+    if (strpos($replacement, $break_character) !== false) {
+      list($before, $after) = explode($break_character, $replacement);
+      if ($value == $before) {
+        $value = $after;
+      }
     }
   }
   return $value;
