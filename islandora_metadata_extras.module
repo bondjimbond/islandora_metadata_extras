@@ -122,12 +122,15 @@ function islandora_metadata_extras_islandora_solr_object_result_alter(&$search_r
  */
 function islandora_metadata_extras_islandora_solr_facet_bucket_classes_alter(&$buckets, $query_processor) {
   if (variable_get('islandora_metadata_extras_rewrite_facets', FALSE)) {
-    $facet_field_configured = variable_get('islandora_metadata_extras_facet_field', 'mods_accessCondition_use_and_reproduction_ms');
+    $facet_fields_configured = variable_get('islandora_metadata_extras_facet_field', 'mods_accessCondition_use_and_reproduction_ms');
+    $facet_fields_configured = explode(" ", $facet_fields_configured);
     foreach ($buckets AS &$facet) {
       $test = $facet['query']['f']['0'];
       if (isset($test)) {
-        if (strpos($test, $facet_field_configured) !== false) {
-          $facet['label'] = islandora_metadata_extras_facet_convert($facet['label']);
+        foreach ($facet_fields_configured AS $facet_field) {
+          if (strpos($test, $facet_field) !== false) {
+            $facet['label'] = islandora_metadata_extras_facet_convert($facet['label']);
+          }
         }
       }
     } 
