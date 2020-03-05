@@ -59,7 +59,8 @@ Configuration options are available at Administration > Islandora > Islandora Ut
 
 ## Maintainer
 
-* [Mark Jordan](https://github.com/mjordan)
+* [Brandon Weigel](https://github.com/bondjimbond)
+    * Former maintainer: [Mark Jordan](https://github.com/mjordan)
 
 ## Development and feedback
 
