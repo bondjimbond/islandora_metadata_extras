@@ -126,8 +126,8 @@ function islandora_metadata_extras_islandora_solr_facet_bucket_classes_alter(&$b
     $facet_fields_configured = explode(" ", $facet_fields_configured);
     foreach ($buckets AS &$facet) {
       if (isset($facet['query']['f'])) {
-        $test = $facet['query']['f']['0'];
-        if (isset($test)) {
+        if (isset($facet['query']['f']['0'])) {
+          $test = $facet['query']['f']['0'];
           foreach ($facet_fields_configured AS $facet_field) {
             if (strpos($test, $facet_field) !== false) {
               $facet['label'] = islandora_metadata_extras_facet_convert($facet['label']);
