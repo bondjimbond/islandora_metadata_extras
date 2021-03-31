@@ -25,7 +25,7 @@
       if (datePattern.test(fieldValue)) {
         dateParts = fieldValue.split("-");
         var year = dateParts[0];
-        var month = dateParts[1];
+        var month = dateParts[1] - 1;
         var date = new Date(year, month);
         month = date.toLocaleString(Drupal.settings.islandora_metadata_extras.locale, { month: "long" });
         var textDate = month + ' ' + year;
