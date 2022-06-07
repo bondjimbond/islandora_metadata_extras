@@ -122,6 +122,7 @@ function islandora_metadata_extras_islandora_solr_object_result_alter(&$search_r
  */
 function islandora_metadata_extras_islandora_solr_facet_bucket_classes_alter(&$buckets, $query_processor) {
   if (variable_get('islandora_metadata_extras_rewrite_facets', FALSE)) {
+    module_load_include('inc', 'islandora_metadata_extras', 'includes/utilities');
     $facet_fields_configured = variable_get('islandora_metadata_extras_facet_field', 'mods_accessCondition_use_and_reproduction_ms');
     $facet_fields_configured = explode(" ", $facet_fields_configured);
     foreach ($buckets AS &$facet) {
